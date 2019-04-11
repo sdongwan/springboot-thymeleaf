@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta content="text/html;charset=UTF-8" />
+<title>thymeleaf</title>
+<!-- <link rel="stylesheet" type="text/css" media="all" href="../../css/gtvg.css" th:href="@{/css/gtvg.css}" /> -->
+</head>
+<body>
+	data-th-text形式 :
+	<div data-th-text="${title}"></div>
+	th:text形式 :
+	<div data-th-text="${title}"></div>
+	文本显示：
+	<div th:text="${title}"></div>
+	会将文本内容进行转义写法：
+	<div th:text="${html}"></div>
+	不会将文本内容进行转义写法：
+	<div th:utext="${html}"></div>
+	运算符：
+	<div th:text="'1 + 1 =' + ${number} * 2 "></div>
+
+	<div th:text="#{home.welcome}"></div>
+</body>
+</html>
