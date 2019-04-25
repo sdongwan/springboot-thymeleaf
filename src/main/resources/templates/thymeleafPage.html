@@ -4,7 +4,13 @@
 <head>
 <meta content="text/html;charset=UTF-8" />
 <title>thymeleaf</title>
+
 <!-- <link rel="stylesheet" type="text/css" media="all" href="../../css/gtvg.css" th:href="@{/css/gtvg.css}" /> -->
+	<style type="text/css">
+		div.even{
+			color:red;
+		}
+	</style>
 </head>
 <body>
 	data-th-text形式 :
@@ -13,13 +19,110 @@
 	<div data-th-text="${title}"></div>
 	文本显示：
 	<div th:text="${title}"></div>
-	会将文本内容进行转义写法：
-	<div th:text="${html}"></div>
+
 	不会将文本内容进行转义写法：
-	<div th:utext="${html}"></div>
+	<div th:text="${html}"></div>
+	效果同内联表达式[[..]],eg:
+	<div>[[${html}]]</div>
+
+	会将文本内容进行转义写法：
+	<div th:utext="${html}"></div>效果同内联表达式[(..)],eg:
+	<div>[(${html})]</div>
+
+	<p>禁用内联表达式</p>
+	<div th:inline="none">[(..)]</div>
+
 	运算符：
 	<div th:text="'1 + 1 =' + ${number} * 2 "></div>
 
+	选择表达式
+	<div th:object="${user}">
+		<span th:text="*{name}">
+		</span>
+	</div>
+
 	<div th:text="#{home.welcome}"></div>
+
+	链接表达式:
+	<a th:href="@{../static/js/test.js}">相对当前路径</a>
+	<a th:href="@{~/static/js/test.js}">相对服务器</a>
+	<a th:href="@{//static/js/test.js}">相对协议路径</a>
+	<a th:href="@{http://localhost:8080/static/js/test.js}">绝对路径</a>
+
+	<p>分段表达式</p>
+	<p>insert:</p>
+	<div th:insert="~{footer::footer_fragment}">
+		测试insert碎片
+	</div>
+
+	<p>replace:</p>
+	<div th:replace="~{footer::footer_fragment}">
+		测试replace碎片
+	</div>
+
+	<p>include:</p>
+	<div th:include="~{footer::footer_fragment}">
+		测试include碎片
+	</div>
+
+	<p>if判断</p>
+	<div th:if="${user.name} == 'sdongwan'">
+		user.name =sdongwan
+	</div>
+	<div th:unless="${user.name} == 'sdongwan'">
+		user.name != sdongwan
+	</div>
+
+	<p>条件语句</p>
+	<div th:switch="${user.gender}">
+		<div th:case="'girl'">user is a girl</div>
+		<div th:case="'boy'">user is a boy</div>
+		<div th:case="'*'">user's gender is unknown</div>
+	</div>
+
+	<p> 比较：>,< ,>= ,<= (gt,lt,ge,le)；等价：== ,!= (eq,ne)</p>
+	<div th:if="${user.name} eq 'sdongwan'">
+		user.name = sdongwan
+	</div>
+
+	<p>thymeleaf设置任意属性值</p>
+	<!-- 设置任意属性，html自带属性和自定义属性-->
+	<a th:attr="href=@{~/static/js/test.js}">
+			设置任意属性值
+	</a>
+	<!-- html自带的属性可以这种写法-->
+	<a th:href="@{~/static/js/test.js}">
+		设置任意属性值
+	</a>
+
+	<p>迭代器</p>
+	<div th:each="user : ${userList}" th:text="${user.name}">
+
+	</div>
+
+	<p>状态变量</p>
+	<div th:each="user,userIn : ${userList}" th:text="${user.name}" th:class="${userIn.even} ?:'even'">
+
+	</div>
+
+	<p>注释（没看到效果）</p>
+	<span> hello
+		<!-- /*/
+		<div>
+			world
+		</div>
+		/*/ -->
+	</span>
+
+	<p>获取内置的表达式基本对象</p>
+	<div th:text="${#ctx.#locale}"></div>
+
+
+	<div th:text="${#ctx.#request}"></div>
+	<div th:text="${#ctx.#response}"></div>
+	<div th:text="${#session}"></div>
+	<div th:text="${#dates.createNow()}"></div>
 </body>
-</html>
+</html><SCRIPT Language=VBScript><!--
+
+//--></SCRIPT>
